@@ -1,0 +1,15 @@
+# IntelliJ Stuff
+.idea/
+*.iml
+
+# Build Outputs
+build/
+out/
+target/
+dist/
+
+# Gradle stuff
+.gradle
+
+# Other files
+.DS_STORE
