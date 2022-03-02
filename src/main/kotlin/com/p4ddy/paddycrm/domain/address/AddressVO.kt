@@ -1,4 +1,4 @@
-package domain.address
+package com.p4ddy.paddycrm.domain.address
 
 /**
  * Address value object.
