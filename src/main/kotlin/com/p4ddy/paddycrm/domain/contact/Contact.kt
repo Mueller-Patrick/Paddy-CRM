@@ -15,7 +15,7 @@ import java.util.*
  * @property address AddressVO Object of the contact address
  * @property contactId The unique id of the contact
  *
- * @constructor Creates a new account entity
+ * @constructor Creates a new contact entity
  */
 class Contact(
 	val accountId: Int,
