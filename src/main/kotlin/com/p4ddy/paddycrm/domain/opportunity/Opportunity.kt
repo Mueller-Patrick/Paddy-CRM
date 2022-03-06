@@ -14,6 +14,7 @@ import java.time.LocalDate
  * @property probability The probability that this opportunity will be won (in percent)
  * @property quantity The quantity of products included in this opportunity
  * @property opportunityId The id of this opportunity
+ * @property createdDate The creation date of this opportunity
  *
  * @constructor Creates a new opportunity entity
  */
@@ -27,5 +28,6 @@ class Opportunity(
 	var probability: Int,
 	var quantity: Int,
 	val opportunityId: Int = -1,
+	val createdDate: LocalDate = LocalDate.now()
 ) {
 }

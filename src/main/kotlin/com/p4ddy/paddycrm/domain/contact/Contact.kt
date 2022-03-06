@@ -14,7 +14,7 @@ import java.util.*
  * @property firstName The first name of the contact
  * @property address AddressVO Object of the contact address
  * @property contactId The unique id of the contact
- * @property createdDate The date of the account creation
+ * @property createdDate The date of the contact creation
  *
  * @constructor Creates a new contact entity
  */

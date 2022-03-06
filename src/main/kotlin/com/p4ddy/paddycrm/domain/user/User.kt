@@ -1,5 +1,7 @@
 package com.p4ddy.paddycrm.domain.user
 
+import java.time.LocalDate
+
 /**
  * User domain entity
  *
@@ -10,6 +12,7 @@ package com.p4ddy.paddycrm.domain.user
  * @property userType What type of users this user is
  * @property managerId The manager of a sales rep. Only fill out for sales rep, leave blank for other user types
  * @property userId The unique id of the user
+ * @property createdDate The creation date of this user
  *
  * @constructor Creates a new user entity
  */
@@ -20,7 +23,8 @@ class User(
 	var email: String,
 	val userType: UserTypes = UserTypes.SALESREP,
 	val managerId: Int = -1,
-	val userId: Int = -1
+	val userId: Int = -1,
+	val createdDate: LocalDate = LocalDate.now()
 ) {
 	init {
 		if (userType == UserTypes.SALESREP && managerId == -1) {
