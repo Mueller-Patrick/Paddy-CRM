@@ -17,15 +17,15 @@ interface OpportunityRepo {
 	/**
 	 * Save the given oppty to the database
 	 */
-	fun save(cont: Opportunity): Opportunity
+	fun save(oppty: Opportunity): Opportunity
 
 	/**
 	 * Update the given oppty in the database
 	 */
-	fun update(cont: Opportunity): Opportunity
+	fun update(oppty: Opportunity): Opportunity
 
 	/**
 	 * Delete the given oppty in the database
 	 */
-	fun delete(cont: Opportunity)
+	fun delete(oppty: Opportunity)
 }
