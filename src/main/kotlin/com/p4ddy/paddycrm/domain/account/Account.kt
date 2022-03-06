@@ -16,26 +16,11 @@ import java.time.LocalDate
  * @constructor Creates a new account entity
  */
 class Account(
-	name: String,
-	ownerId: Int,
-	billingAddress: AddressVO,
-	shippingAddress: AddressVO = billingAddress,
-	accountId: Int = -1,
-	createdDate: LocalDate = LocalDate.now(),
+	var name: String,
+	val ownerId: Int,
+	var billingAddress: AddressVO,
+	var shippingAddress: AddressVO = billingAddress,
+	val accountId: Int = -1,
+	val createdDate: LocalDate = LocalDate.now(),
 ) {
-	val accountId: Int
-	var name: String
-	val createdDate: LocalDate
-	val ownerId: Int
-	var billingAddress: AddressVO
-	var shippingAddress: AddressVO
-
-	init {
-		this.accountId = accountId
-		this.name = name
-		this.createdDate = createdDate
-		this.ownerId = ownerId
-		this.billingAddress = billingAddress
-		this.shippingAddress = shippingAddress
-	}
 }
