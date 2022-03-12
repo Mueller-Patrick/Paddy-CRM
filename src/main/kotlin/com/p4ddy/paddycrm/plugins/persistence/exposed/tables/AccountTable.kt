@@ -8,7 +8,7 @@ import java.time.LocalDate
 object AccountTable: Table("account") {
 	val accountId: Column<Int> = integer("account_id").autoIncrement()
 	val name: Column<String> = text("name")
-	val ownerId: Column<Int> = integer("owner_id")
+	val ownerId: Column<Int> = integer("owner_id").references(UserTable.userId)
 	val billingAddressCountry: Column<String> = text("billing_address_country")
 	val billingAddressCity: Column<String> = text("billing_address_city")
 	val billingAddressZipCode: Column<String> = text("billing_address_zip")

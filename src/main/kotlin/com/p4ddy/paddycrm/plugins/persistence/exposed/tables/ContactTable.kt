@@ -7,8 +7,8 @@ import java.time.LocalDate
 
 object ContactTable: Table("contact") {
 	val contactId: Column<Int> = integer("contact_id").autoIncrement()
-	val accountId: Column<Int> = integer("account_id")
-	val ownerId: Column<Int> = integer("owner_id")
+	val accountId: Column<Int> = integer("account_id").references(AccountTable.accountId)
+	val ownerId: Column<Int> = integer("owner_id").references(UserTable.userId)
 	val salutation: Column<String> = text("salutation")
 	val lastName: Column<String> = text("last_name")
 	val firstName: Column<String> = text("first_name")

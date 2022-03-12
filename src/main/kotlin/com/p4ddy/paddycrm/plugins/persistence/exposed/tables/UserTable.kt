@@ -7,7 +7,7 @@ import java.time.LocalDate
 
 object UserTable: Table("user") {
 	val userId: Column<Int> = integer("user_id").autoIncrement()
-	val managerId: Column<Int> = integer("manager_id")
+	val managerId: Column<Int> = integer("manager_id").references(userId)
 	val lastName: Column<String> = text("last_name")
 	val firstName: Column<String> = text("first_name")
 	val password: Column<String> = text("password")
