@@ -18,7 +18,7 @@ import java.time.LocalDate
  * @property opportunityId The id of the opportunity
  * @property createdDate The creation date of the opportunity
  */
-class OpportunityBE(
+data class OpportunityBE(
 	val name: String,
 	val accountName: String,
 	val accountId: Int,
