@@ -6,16 +6,17 @@ import com.p4ddy.paddycrm.domain.address.AddressVO
 import com.p4ddy.paddycrm.domain.user.UserRepo
 
 /**
- * Account converter class to convert account objects to account business entity objects and the other way around
+ * Account converter class to convert account objects to account business entity objects and vice versa
  */
 class AccountConverter(
 	val userRepo: UserRepo,
 	val userApplicationService: UserApplicationService = UserApplicationService(userRepo)
 ) {
 	/**
-	 * Converts an AccountBE Object to an Account Object
-	 * @param acctBE The AccountBE Object to convert
-	 * @return The converted Account Object
+	 * Converts an AccountBE Object to an Account object
+	 *
+	 * @param acctBE The AccountBE object to convert
+	 * @return The converted Account object
 	 */
 	fun convertBEToAccount(acctBE: AccountBE): Account {
 		val account = Account(
@@ -41,9 +42,10 @@ class AccountConverter(
 	}
 
 	/**
-	 * Converts an Account object to an AccountBE Object
-	 * @param acct The Account Object to convert
-	 * @return The converted AccountBE Object
+	 * Converts an Account object to an AccountBE object
+	 *
+	 * @param acct The Account object to convert
+	 * @return The converted AccountBE object
 	 */
 	fun convertAccountToBE(acct: Account): AccountBE {
 		val accountOwner = userApplicationService.findUserById(acct.ownerId)
