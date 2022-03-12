@@ -13,7 +13,7 @@ class AccountConverter(
 	val userApplicationService: UserApplicationService = UserApplicationService(userRepo)
 ) {
 	/**
-	 * Converts an AccountBE Object to an Account object
+	 * Converts an AccountBE object to an Account object
 	 *
 	 * @param acctBE The AccountBE object to convert
 	 * @return The converted Account object

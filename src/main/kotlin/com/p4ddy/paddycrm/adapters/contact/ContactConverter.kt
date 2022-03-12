@@ -6,8 +6,6 @@ import com.p4ddy.paddycrm.domain.account.AccountRepo
 import com.p4ddy.paddycrm.domain.address.AddressVO
 import com.p4ddy.paddycrm.domain.contact.Contact
 import com.p4ddy.paddycrm.domain.user.UserRepo
-import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.ContactTable.lastName
-import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.ContactTable.salutation
 
 /**
  * Contact converter class to convert contact objects to contact business entitiy objects and vice versa
@@ -19,7 +17,7 @@ class ContactConverter(
 	val accountApplicationService: AccountApplicationService = AccountApplicationService(acctRepo)
 ) {
 	/**
-	 * Converts a ContactBE Object to a Contact object
+	 * Converts a ContactBE object to a Contact object
 	 *
 	 * @param contBE The ContactBE object to convert
 	 * @return The converted Contact object
