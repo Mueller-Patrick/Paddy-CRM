@@ -18,7 +18,7 @@ import java.time.LocalDate
  *
  * @constructor Creates a new opportunity entity
  */
-class Opportunity(
+data class Opportunity(
 	var name: String,
 	val accountId: Int,
 	var amount: Float,

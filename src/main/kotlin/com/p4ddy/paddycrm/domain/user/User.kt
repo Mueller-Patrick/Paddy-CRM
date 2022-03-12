@@ -16,7 +16,7 @@ import java.time.LocalDate
  *
  * @constructor Creates a new user entity
  */
-class User(
+data class User(
 	var lastName: String,
 	var firstName: String,
 	var password: String,

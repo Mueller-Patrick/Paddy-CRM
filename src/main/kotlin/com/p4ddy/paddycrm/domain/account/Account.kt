@@ -15,7 +15,7 @@ import java.time.LocalDate
  *
  * @constructor Creates a new account entity
  */
-class Account(
+data class Account(
 	var name: String,
 	val ownerId: Int,
 	var billingAddress: AddressVO,

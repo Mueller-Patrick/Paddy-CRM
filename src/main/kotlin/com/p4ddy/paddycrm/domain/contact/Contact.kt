@@ -18,7 +18,7 @@ import java.util.*
  *
  * @constructor Creates a new contact entity
  */
-class Contact(
+data class Contact(
 	val accountId: Int,
 	val ownerId: Int,
 	var salutation: String,
