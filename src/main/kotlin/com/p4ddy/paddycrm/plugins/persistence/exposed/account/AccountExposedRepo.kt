@@ -91,6 +91,7 @@ class AccountExposedRepo : AccountRepo {
 
 	override fun save(acct: Account): Account {
 		var accountId = -1
+
 		transaction {
 			accountId = AccountTable.insert {
 				it[name] = acct.name
@@ -111,14 +112,13 @@ class AccountExposedRepo : AccountRepo {
 			throw Exception("Error inserting the account into the database")
 		}
 
-		return acct.copy(accountId = accountId)
+		return acct.copy(accountId = accountId, ownerId = getCurrentUserId())
 	}
 
 	override fun update(acct: Account): Account {
 		transaction {
-			AccountTable.update({ getUserVisibilityQueryClause() }) {
+			AccountTable.update({ accountId.eq(acct.accountId) and getUserVisibilityQueryClause() }) {
 				it[name] = acct.name
-				it[ownerId] = getCurrentUserId()
 				it[billingAddressCountry] = acct.billingAddress.country
 				it[billingAddressCity] = acct.billingAddress.city
 				it[billingAddressZipCode] = acct.billingAddress.zipCode
@@ -127,11 +127,10 @@ class AccountExposedRepo : AccountRepo {
 				it[shippingAddressCity] = acct.shippingAddress.city
 				it[shippingAddressZipCode] = acct.shippingAddress.zipCode
 				it[shippingAddressStreetAndNumber] = acct.shippingAddress.streetAndNumber
-				it[createdDate] = acct.createdDate
 			}
 		}
 
-		return acct
+		return findById(acct.accountId)
 	}
 
 	override fun delete(acct: Account) {
@@ -163,7 +162,7 @@ class AccountExposedRepo : AccountRepo {
 
 		val queryFilter = when (user.userType) {
 			UserTypes.ADMIN -> {
-				ownerId.eq(1)
+				accountId.eq(accountId)
 			}
 			UserTypes.SALESREP -> {
 				ownerId.eq(user.userId)
