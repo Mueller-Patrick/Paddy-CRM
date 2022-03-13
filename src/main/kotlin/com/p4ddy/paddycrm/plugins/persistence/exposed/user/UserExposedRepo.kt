@@ -105,9 +105,7 @@ class UserExposedRepo : UserRepo {
 
 		transaction {
 			userId = UserTable.insert {
-				if (user.managerId != -1) {
-					it[managerId] = user.managerId
-				}
+				it[managerId] = user.managerId
 				it[lastName] = user.lastName
 				it[firstName] = user.firstName
 				it[password] = user.password
@@ -127,9 +125,7 @@ class UserExposedRepo : UserRepo {
 	override fun update(user: User): User {
 		transaction {
 			UserTable.update({ userId.eq(user.userId) }) {
-				if (user.managerId != -1) {
-					it[managerId] = user.managerId
-				}
+				it[managerId] = user.managerId
 				it[lastName] = user.lastName
 				it[firstName] = user.firstName
 				it[password] = user.password

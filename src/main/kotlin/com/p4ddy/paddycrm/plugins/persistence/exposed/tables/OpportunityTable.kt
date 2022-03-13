@@ -5,7 +5,7 @@ import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.date
 import java.time.LocalDate
 
-object OpportunityTable: Table() {
+object OpportunityTable: Table("opportunity") {
 	val opportunityId: Column<Int> = integer("opportunity_id").autoIncrement()
 	val name: Column<String> = text("name")
 	val accountId: Column<Int> = integer("account_id").references(AccountTable.accountId)
