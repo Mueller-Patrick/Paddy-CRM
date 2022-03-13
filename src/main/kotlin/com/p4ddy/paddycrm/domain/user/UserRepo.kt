@@ -20,6 +20,11 @@ interface UserRepo {
 	fun findByEmail(email: String): User
 
 	/**
+	 * Check, if the given password is valid for the user with the given id
+	 */
+	fun checkPasswordValid(userId: Int, password: String): Boolean
+
+	/**
 	 * Save the given user to the database
 	 */
 	fun save(user: User): User

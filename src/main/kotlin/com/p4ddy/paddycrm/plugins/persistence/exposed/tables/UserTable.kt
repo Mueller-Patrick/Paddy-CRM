@@ -11,7 +11,7 @@ object UserTable: Table("user") {
 	val lastName: Column<String> = text("last_name")
 	val firstName: Column<String> = text("first_name")
 	val password: Column<String> = text("password")
-	val email: Column<String> = text("email")
+	val email: Column<String> = text("email").uniqueIndex()
 	val userType: Column<String> = text("user_type")
 	val createdDate: Column<LocalDate> = date("created_date")
 
