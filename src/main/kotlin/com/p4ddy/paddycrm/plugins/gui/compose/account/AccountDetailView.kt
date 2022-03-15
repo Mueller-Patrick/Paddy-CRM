@@ -33,14 +33,15 @@ fun AccountDetailView(
 	startInEditMode: Boolean = false
 ) {
 	val accountRepo: AccountRepo = AccountExposedRepo()
-	val accountService: AccountApplicationService = AccountApplicationService(accountRepo)
+	val accountService = AccountApplicationService(accountRepo)
+	val accountConverter = AccountConverter(UserExposedRepo())
 
 	var thisAccount: Account? = null
 	var thisAccountBE: AccountBE? = null
 
-	if(navController.navigateParam != -1) {
+	if (navController.navigateParam != -1) {
 		thisAccount = accountService.findAccountById(navController.navigateParam)
-		thisAccountBE = AccountConverter(UserExposedRepo()).convertAccountToBE(thisAccount)
+		thisAccountBE = accountConverter.convertAccountToBE(thisAccount)
 	} else {
 		thisAccountBE = AccountBE(
 			name = "",
@@ -87,9 +88,9 @@ fun AccountDetailView(
 					thisAccountBE.shippingZip = accountShippingZip.value.text
 					thisAccountBE.shippingStreetAndNumber = accountShippingStreetAndNumber.value.text
 
-					val account = AccountConverter(UserExposedRepo()).convertBEToAccount(thisAccountBE)
+					val account = accountConverter.convertBEToAccount(thisAccountBE)
 
-					if(navController.navigateParam != -1) {
+					if (navController.navigateParam != -1) {
 						accountService.updateAccount(account)
 					} else {
 						val createdAccount = accountService.createAccount(account)
@@ -106,7 +107,7 @@ fun AccountDetailView(
 				}
 			}
 
-			if(navController.navigateParam != -1) {
+			if (navController.navigateParam != -1) {
 				Spacer(modifier = Modifier.width(10.dp))
 
 				Button(onClick = {

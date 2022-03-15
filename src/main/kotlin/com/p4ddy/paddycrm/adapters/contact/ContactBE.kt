@@ -21,17 +21,17 @@ import java.time.LocalDate
  */
 data class ContactBE(
 	val accountName: String,
-	val accountId: Int,
+	var accountId: Int,
 	val ownerName: String,
 	val ownerId: Int,
-	val salutation: String,
-	val lastName: String,
-	val firstName: String,
-	val addressCountry: String,
-	val addressCity: String,
-	val addressZip: String,
-	val addressStreetAndNumber: String,
-	val contactId: Int = -1,
+	var salutation: String,
+	var lastName: String,
+	var firstName: String,
+	var addressCountry: String,
+	var addressCity: String,
+	var addressZip: String,
+	var addressStreetAndNumber: String,
+	var contactId: Int = -1,
 	val createdDate: LocalDate = LocalDate.now()
 ) {
 }
