@@ -147,7 +147,7 @@ fun ContactDetailView(
 			DetailColumnTemplate {
 				DetailColumnTemplateLeft("Contact Id", modifier = Modifier.weight(1F)) {
 					Text(
-						text = thisContactBE.accountId.toString()
+						text = thisContactBE.contactId.toString()
 					)
 				}
 

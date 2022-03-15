@@ -19,17 +19,17 @@ import java.time.LocalDate
  * @property createdDate The creation date of the opportunity
  */
 data class OpportunityBE(
-	val name: String,
+	var name: String,
 	val accountName: String,
-	val accountId: Int,
-	val amount: Float,
-	val closeDate: LocalDate,
+	var accountId: Int,
+	var amount: Float,
+	var closeDate: LocalDate,
 	val ownerName: String,
 	val ownerId: Int,
-	val product: String,
-	val probability: Int,
-	val quantity: Int,
-	val opportunityId: Int = -1,
+	var product: String,
+	var probability: Int,
+	var quantity: Int,
+	var opportunityId: Int = -1,
 	val createdDate: LocalDate = LocalDate.now()
 ) {
 }

@@ -1,11 +1,12 @@
-package com.p4ddy.paddycrm.plugins.gui.compose.contact
+package com.p4ddy.paddycrm.plugins.gui.compose.opportunity
 
 import androidx.compose.runtime.Composable
 import com.p4ddy.paddycrm.plugins.gui.compose.navigation.NavController
 
 @Composable
-fun ContactCreateView(
+fun OpportunityCreateView(
 	navController: NavController
 ) {
-	ContactDetailView(navController, true)
+	println("Here")
+	OpportunityDetailView(navController, true)
 }

@@ -13,7 +13,7 @@ fun AccountCompactView(account: Account) {
 	Column(
 		modifier = Modifier.fillMaxSize()
 	) {
-		Text("Name: ${account.name}", modifier = Modifier.align(Alignment.Start))
+		Text("Name: ${account.name}")
 		Text("Billing City: ${account.billingAddress.city}")
 	}
 }

@@ -1,4 +1,4 @@
-package com.p4ddy.paddycrm.plugins.gui.compose.contact
+package com.p4ddy.paddycrm.plugins.gui.compose.opportunity
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -6,15 +6,15 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.p4ddy.paddycrm.domain.account.Account
 import com.p4ddy.paddycrm.domain.contact.Contact
+import com.p4ddy.paddycrm.domain.opportunity.Opportunity
 
 @Composable
-fun ContactCompactView(contact: Contact) {
+fun OpportunityCompactView(oppty: Opportunity) {
 	Column(
 		modifier = Modifier.fillMaxSize()
 	) {
-		Text("Name: ${contact.firstName} ${contact.lastName}")
-		Text("Billing City: ${contact.address.city}")
+		Text("Name: ${oppty.name}")
+		Text("Amount: ${oppty.amount}€")
 	}
 }
