@@ -18,7 +18,7 @@ fun ScrollView(title: String, content: @Composable () -> Unit) {
 
 	Column(
 		modifier = Modifier
-			.padding(start = 80.dp, top = 10.dp)
+			.padding(start = 80.dp, top = 50.dp)
 			.verticalScroll(stateVertical)
 			.fillMaxSize(),
 		verticalArrangement = Arrangement.Center,
