@@ -94,8 +94,7 @@ class UserApplicationService(
 		lastName: String,
 		firstName: String,
 		password: String,
-		email: String,
-		managerId: Int
+		email: String
 	): User {
 		if (UserSingleton.user == null) {
 			throw Exception("Can't create user when no user is logged in")
@@ -121,8 +120,7 @@ class UserApplicationService(
 		lastName: String,
 		firstName: String,
 		password: String,
-		email: String,
-		managerId: Int
+		email: String
 	): User {
 		// So we can initially create an admin account upon first start without getting an Exception
 		if (userRepo.findAll().isNotEmpty()) {

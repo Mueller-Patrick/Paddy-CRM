@@ -55,6 +55,16 @@ class ContactApplicationService(
 	}
 
 	/**
+	 * Save the given contact to the database
+	 *
+	 * @param cont The contact to save
+	 * @return The created contact object
+	 */
+	fun createContact(cont: Contact): Contact {
+		return contactRepo.save(cont)
+	}
+
+	/**
 	 * Update the given contact in the database
 	 *
 	 * @param cont: The contact to update

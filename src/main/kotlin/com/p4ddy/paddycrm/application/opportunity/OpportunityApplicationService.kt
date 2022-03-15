@@ -59,6 +59,16 @@ class OpportunityApplicationService(
 	}
 
 	/**
+	 * Saves the given oppty to the database
+	 * 
+	 * @param oppty The oppty to save
+	 * @return The created oppty object
+	 */
+	fun createOpportunity(oppty: Opportunity): Opportunity {
+		return opptyRepo.save(oppty)
+	}
+
+	/**
 	 * Update the given oppty in the database
 	 *
 	 * @param oppty: The oppty to update

@@ -60,6 +60,16 @@ class AccountApplicationService(
 	}
 
 	/**
+	 * Save the given account object to the database
+	 *
+	 * @param acct The account to save
+	 * @return The created account object
+	 */
+	fun createAccount(acct: Account): Account {
+		return accountRepo.save(acct)
+	}
+
+	/**
 	 * Update the given account in the database
 	 *
 	 * @param acct: The account to update
