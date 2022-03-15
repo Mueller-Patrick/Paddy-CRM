@@ -7,6 +7,5 @@ import com.p4ddy.paddycrm.plugins.gui.compose.navigation.NavController
 fun OpportunityCreateView(
 	navController: NavController
 ) {
-	println("Here")
 	OpportunityDetailView(navController, true)
 }

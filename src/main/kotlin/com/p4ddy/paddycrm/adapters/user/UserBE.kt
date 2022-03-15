@@ -16,12 +16,13 @@ import java.time.LocalDate
  * @property createdDate The creation date of the user
  */
 data class UserBE(
-	val lastName: String,
-	val firstName: String,
-	val password: String,
-	val email: String,
-	val userType: UserTypes = UserTypes.SALESREP,
-	val managerId: Int = -1,
+	var lastName: String,
+	var firstName: String,
+	var password: String,
+	var email: String,
+	val managerName: String,
+	var managerId: Int = -1,
+	var userType: UserTypes = UserTypes.SALESREP,
 	val userId: Int = -1,
 	val createdDate: LocalDate = LocalDate.now()
 ) {
