@@ -1,4 +1,4 @@
-package com.p4ddy.paddycrm.plugins.gui.compose
+package com.p4ddy.paddycrm.plugins.gui.compose.misc
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
@@ -10,6 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.p4ddy.paddycrm.application.user.UserSingleton
 import com.p4ddy.paddycrm.plugins.gui.compose.account.AccountCreateView
 import com.p4ddy.paddycrm.plugins.gui.compose.account.AccountDetailView
 import com.p4ddy.paddycrm.plugins.gui.compose.account.AccountListView
