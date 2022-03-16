@@ -18,6 +18,8 @@ import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.AccountTable.shippi
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.AccountTable.shippingAddressCountry
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.AccountTable.shippingAddressStreetAndNumber
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.AccountTable.shippingAddressZipCode
+import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.ContactTable
+import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.OpportunityTable
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.UserTable
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.UserTable.managerId
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.UserTable.userId
@@ -135,7 +137,12 @@ class AccountExposedRepo : AccountRepo {
 
 	override fun delete(acct: Account) {
 		transaction {
-			AccountTable.deleteWhere { accountId.eq(acct.accountId) and getUserVisibilityQueryClause() }
+			val deletedRows =
+				AccountTable.deleteWhere { accountId.eq(acct.accountId) and getUserVisibilityQueryClause() }
+			if (deletedRows > 0) {
+				ContactTable.deleteWhere { ContactTable.accountId.eq(acct.accountId) }
+				OpportunityTable.deleteWhere { OpportunityTable.accountId.eq(acct.accountId) }
+			}
 		}
 	}
 

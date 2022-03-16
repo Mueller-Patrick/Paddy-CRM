@@ -4,6 +4,9 @@ import com.p4ddy.paddycrm.application.user.UserSingleton
 import com.p4ddy.paddycrm.domain.user.User
 import com.p4ddy.paddycrm.domain.user.UserRepo
 import com.p4ddy.paddycrm.domain.user.UserTypes
+import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.AccountTable
+import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.ContactTable
+import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.OpportunityTable
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.UserTable
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.UserTable.createdDate
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.UserTable.email
@@ -140,6 +143,10 @@ class UserExposedRepo : UserRepo {
 	override fun delete(user: User) {
 		transaction {
 			UserTable.deleteWhere { userId.eq(user.userId) }
+			UserTable.deleteWhere { managerId.eq(user.userId) }
+			AccountTable.deleteWhere { AccountTable.ownerId.eq(user.userId) }
+			ContactTable.deleteWhere { ContactTable.ownerId.eq(user.userId) }
+			OpportunityTable.deleteWhere { OpportunityTable.ownerId.eq(user.userId) }
 		}
 	}
 }
