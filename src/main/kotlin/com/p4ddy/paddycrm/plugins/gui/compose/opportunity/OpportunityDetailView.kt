@@ -16,6 +16,7 @@ import com.p4ddy.paddycrm.adapters.opportunity.OpportunityConverter
 import com.p4ddy.paddycrm.application.opportunity.OpportunityApplicationService
 import com.p4ddy.paddycrm.domain.opportunity.Opportunity
 import com.p4ddy.paddycrm.domain.opportunity.OpportunityRepo
+import com.p4ddy.paddycrm.domain.opportunity.OpportunityStage
 import com.p4ddy.paddycrm.plugins.gui.compose.account.getTextfieldBackgroundColor
 import com.p4ddy.paddycrm.plugins.gui.compose.layout.*
 import com.p4ddy.paddycrm.plugins.gui.compose.navigation.NavController
@@ -52,7 +53,8 @@ fun OpportunityDetailView(
 			ownerId = -1,
 			product = "",
 			probability = 0,
-			quantity = 0
+			quantity = 0,
+			stage = OpportunityStage.PROSPECTING
 		)
 	}
 
@@ -64,6 +66,7 @@ fun OpportunityDetailView(
 	val product = remember { mutableStateOf(TextFieldValue(thisOpptyBE.product)) }
 	val probability = remember { mutableStateOf(TextFieldValue(thisOpptyBE.probability.toString())) }
 	val quantity = remember { mutableStateOf(TextFieldValue(thisOpptyBE.quantity.toString())) }
+	val stage = remember { mutableStateOf(TextFieldValue(thisOpptyBE.stage.toString())) }
 
 	val isEditMode = remember { mutableStateOf(startInEditMode) }
 
@@ -80,6 +83,7 @@ fun OpportunityDetailView(
 					thisOpptyBE.product = product.value.text
 					thisOpptyBE.probability = probability.value.text.toInt()
 					thisOpptyBE.quantity = quantity.value.text.toInt()
+					thisOpptyBE.stage = OpportunityStage.valueOf(stage.value.text)
 
 					val oppty = opptyConverter.convertBEToOpportunity(thisOpptyBE)
 
@@ -235,6 +239,21 @@ fun OpportunityDetailView(
 					colors = getTextfieldBackgroundColor(isEditMode.value),
 					label = {
 						Text("Probability")
+					},
+					modifier = Modifier.wrapContentWidth(Alignment.Start).weight(1F)
+				)
+			}
+
+			DetailColumnTemplate {
+				TextField(
+					value = stage.value,
+					onValueChange = {
+						stage.value = it
+					},
+					readOnly = !isEditMode.value,
+					colors = getTextfieldBackgroundColor(isEditMode.value),
+					label = {
+						Text("Opportunity Stage")
 					},
 					modifier = Modifier.wrapContentWidth(Alignment.Start).weight(1F)
 				)

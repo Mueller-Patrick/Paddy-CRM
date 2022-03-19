@@ -24,6 +24,7 @@ object OpportunityTable: Table("opportunity") {
 	val product: Column<String> = text("product")
 	val probability: Column<Int> = integer("probability")
 	val quantity: Column<Int> = integer("quantity")
+	val stage: Column<String> = text("stage")
 	val createdDate: Column<LocalDate> = date("created_date")
 
 	override val primaryKey = PrimaryKey(opportunityId)

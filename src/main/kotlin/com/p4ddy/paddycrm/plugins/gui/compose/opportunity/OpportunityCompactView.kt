@@ -16,5 +16,6 @@ fun OpportunityCompactView(oppty: Opportunity) {
 	) {
 		Text("Name: ${oppty.name}")
 		Text("Amount: ${oppty.amount}€")
+		Text("Stage: ${oppty.stage}")
 	}
 }

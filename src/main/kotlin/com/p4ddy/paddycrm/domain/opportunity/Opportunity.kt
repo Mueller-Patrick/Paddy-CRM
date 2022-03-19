@@ -27,6 +27,7 @@ data class Opportunity(
 	var product: String,
 	var probability: Int,
 	var quantity: Int,
+	var stage: OpportunityStage = OpportunityStage.PROSPECTING,
 	val opportunityId: Int = -1,
 	val createdDate: LocalDate = LocalDate.now()
 ) {

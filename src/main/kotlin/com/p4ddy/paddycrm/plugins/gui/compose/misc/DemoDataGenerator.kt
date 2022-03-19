@@ -6,6 +6,7 @@ import com.p4ddy.paddycrm.application.opportunity.OpportunityApplicationService
 import com.p4ddy.paddycrm.application.user.UserApplicationService
 import com.p4ddy.paddycrm.application.user.UserSingleton
 import com.p4ddy.paddycrm.domain.address.AddressVO
+import com.p4ddy.paddycrm.domain.opportunity.OpportunityStage
 import com.p4ddy.paddycrm.plugins.persistence.exposed.account.AccountExposedRepo
 import com.p4ddy.paddycrm.plugins.persistence.exposed.contact.ContactExposedRepo
 import com.p4ddy.paddycrm.plugins.persistence.exposed.opportunity.OpportunityExposedRepo
@@ -43,7 +44,8 @@ fun generateDemoData() {
 		sr1.userId,
 		"Kotlin",
 		100,
-		1
+		1,
+		OpportunityStage.CLOSED_WON
 	)
 
 	UserSingleton.user = sr2
@@ -56,7 +58,8 @@ fun generateDemoData() {
 		sr2.userId,
 		"Döner Kebab",
 		90,
-		4
+		4,
+		OpportunityStage.PROPOSAL
 	)
 
 	UserSingleton.user = admin

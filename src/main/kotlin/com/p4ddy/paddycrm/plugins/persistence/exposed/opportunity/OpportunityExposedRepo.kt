@@ -3,6 +3,7 @@ package com.p4ddy.paddycrm.plugins.persistence.exposed.opportunity
 import com.p4ddy.paddycrm.application.user.UserSingleton
 import com.p4ddy.paddycrm.domain.opportunity.Opportunity
 import com.p4ddy.paddycrm.domain.opportunity.OpportunityRepo
+import com.p4ddy.paddycrm.domain.opportunity.OpportunityStage
 import com.p4ddy.paddycrm.domain.user.UserTypes
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.OpportunityTable
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.OpportunityTable.accountId
@@ -15,6 +16,7 @@ import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.OpportunityTable.ow
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.OpportunityTable.probability
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.OpportunityTable.product
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.OpportunityTable.quantity
+import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.OpportunityTable.stage
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.UserTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -37,6 +39,7 @@ class OpportunityExposedRepo : OpportunityRepo {
 						product = opptyRow[product],
 						probability = opptyRow[probability],
 						quantity = opptyRow[quantity],
+						stage = OpportunityStage.valueOf(opptyRow[stage]),
 						opportunityId = opptyRow[opportunityId],
 						createdDate = opptyRow[createdDate]
 					)
@@ -67,6 +70,7 @@ class OpportunityExposedRepo : OpportunityRepo {
 			product = resultRow!![product],
 			probability = resultRow!![probability],
 			quantity = resultRow!![quantity],
+			stage = OpportunityStage.valueOf(resultRow!![stage]),
 			opportunityId = resultRow!![opportunityId],
 			createdDate = resultRow!![createdDate]
 		)
@@ -85,6 +89,7 @@ class OpportunityExposedRepo : OpportunityRepo {
 				it[product] = oppty.product
 				it[probability] = oppty.probability
 				it[quantity] = oppty.quantity
+				it[stage] = oppty.stage.toString()
 				it[createdDate] = oppty.createdDate
 			}[OpportunityTable.opportunityId]
 		}
@@ -106,6 +111,7 @@ class OpportunityExposedRepo : OpportunityRepo {
 				it[product] = oppty.product
 				it[probability] = oppty.probability
 				it[quantity] = oppty.quantity
+				it[stage] = oppty.stage.toString()
 			}
 		}
 

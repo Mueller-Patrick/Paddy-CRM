@@ -1,5 +1,6 @@
 package com.p4ddy.paddycrm.adapters.opportunity
 
+import com.p4ddy.paddycrm.domain.opportunity.OpportunityStage
 import java.time.LocalDate
 
 /**
@@ -29,6 +30,7 @@ data class OpportunityBE(
 	var product: String,
 	var probability: Int,
 	var quantity: Int,
+	var stage: OpportunityStage = OpportunityStage.PROSPECTING,
 	var opportunityId: Int = -1,
 	val createdDate: LocalDate = LocalDate.now()
 ) {

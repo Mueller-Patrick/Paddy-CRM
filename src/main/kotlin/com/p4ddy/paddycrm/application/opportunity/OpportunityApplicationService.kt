@@ -2,6 +2,7 @@ package com.p4ddy.paddycrm.application.opportunity
 
 import com.p4ddy.paddycrm.domain.opportunity.Opportunity
 import com.p4ddy.paddycrm.domain.opportunity.OpportunityRepo
+import com.p4ddy.paddycrm.domain.opportunity.OpportunityStage
 import java.time.LocalDate
 
 /**
@@ -52,9 +53,10 @@ class OpportunityApplicationService(
 		ownerId: Int,
 		product: String,
 		probability: Int,
-		quantity: Int
+		quantity: Int,
+		stage: OpportunityStage
 	): Opportunity {
-		val oppty = Opportunity(name, accountId, amount, closeDate, ownerId, product, probability, quantity)
+		val oppty = Opportunity(name, accountId, amount, closeDate, ownerId, product, probability, quantity, stage)
 		return opptyRepo.save(oppty)
 	}
 

@@ -31,6 +31,7 @@ class OpportunityConverter(
 			product = opptyBE.product,
 			probability = opptyBE.probability,
 			quantity = opptyBE.quantity,
+			stage = opptyBE.stage,
 			opportunityId = opptyBE.opportunityId,
 			createdDate = opptyBE.createdDate
 		)
@@ -59,6 +60,7 @@ class OpportunityConverter(
 			product = oppty.product,
 			probability = oppty.probability,
 			quantity = oppty.quantity,
+			stage = oppty.stage,
 			opportunityId = oppty.opportunityId,
 			createdDate = oppty.createdDate
 		)
