@@ -42,7 +42,7 @@ fun main() = application {
  * Connects to SQLite DB and creates the required tables if they don't already exist
  */
 private fun prepareDatabase() {
-	Database.connect("jdbc:sqlite:data/database.sqlite", "org.sqlite.JDBC")
+	Database.connect("jdbc:sqlite:database.sqlite", "org.sqlite.JDBC")
 
 	TransactionManager.manager.defaultIsolationLevel =
 		Connection.TRANSACTION_SERIALIZABLE
