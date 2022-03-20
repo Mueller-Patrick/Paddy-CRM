@@ -13,6 +13,7 @@ internal class AddressVOTest {
 			"76133",
 			"Erzbergerstraße 121"
 		)
+		assertEquals("Germany", address.country)
 
 		val address2 = AddressVO(
 			"Country",
@@ -20,12 +21,13 @@ internal class AddressVOTest {
 			"1111",
 			"Street Number"
 		)
+		assertEquals("Country", address2.country)
 	}
 
 	@Test
 	fun createAddressVONegative() {
 		val exception = assertThrows<Exception> {
-			val address2 = AddressVO(
+			AddressVO(
 				"Country",
 				"City",
 				"111111",
@@ -35,7 +37,7 @@ internal class AddressVOTest {
 		assertEquals("zipCode must be between 0 and 99999", exception.message)
 
 		val exception2 = assertThrows<Exception> {
-			val address2 = AddressVO(
+			AddressVO(
 				"Country",
 				"City",
 				"NotANumber",
@@ -45,7 +47,7 @@ internal class AddressVOTest {
 		assertEquals("zipCode must be a number", exception2.message)
 
 		val exception3 = assertThrows<Exception> {
-			val address2 = AddressVO(
+			AddressVO(
 				"",
 				"City",
 				"12345",

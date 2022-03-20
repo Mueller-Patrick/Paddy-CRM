@@ -35,9 +35,9 @@ internal class UserApplicationServiceTest {
 		val testmanager = userService!!.createManager("Last", "First", "Password", "email@manager.org")
 		val testsalesrep = userService!!.createSalesRep("Last", "First", "Password", "email@salesrep.org", 1337)
 
-		assert(testadmin.email == "email@admin.org")
-		assert(testmanager.email == "email@manager.org")
-		assert(testsalesrep.email == "email@salesrep.org")
+		assertEquals("email@admin.org", testadmin.email)
+		assertEquals("email@manager.org", testmanager.email)
+		assertEquals("email@salesrep.org", testsalesrep.email)
 	}
 
 	@Test
