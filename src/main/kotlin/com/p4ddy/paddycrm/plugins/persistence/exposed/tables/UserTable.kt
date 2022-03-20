@@ -6,7 +6,7 @@ import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.date
 import java.time.LocalDate
 
-object UserTable: Table("user") {
+object UserTable : Table("user") {
 	val userId: Column<Int> = integer("user_id").autoIncrement()
 	val managerId: Column<Int> = integer("manager_id").references(
 		userId,

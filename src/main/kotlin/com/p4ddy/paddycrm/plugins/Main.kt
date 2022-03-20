@@ -6,15 +6,14 @@ import androidx.compose.ui.res.useResource
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import com.p4ddy.paddycrm.application.user.UserSingleton
-import com.p4ddy.paddycrm.domain.user.User
 import com.p4ddy.paddycrm.plugins.gui.compose.misc.LoginScreen
 import com.p4ddy.paddycrm.plugins.gui.compose.misc.MainView
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.AccountTable
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.ContactTable
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.OpportunityTable
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.UserTable
-import com.p4ddy.paddycrm.plugins.persistence.exposed.user.UserExposedRepo
-import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.TransactionManager
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.sql.Connection

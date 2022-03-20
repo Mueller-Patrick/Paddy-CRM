@@ -1,16 +1,15 @@
 package com.p4ddy.paddycrm.plugins.gui.compose.misc
 
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.p4ddy.paddycrm.application.user.UserSingleton
 import com.p4ddy.paddycrm.plugins.gui.compose.account.AccountCreateView
 import com.p4ddy.paddycrm.plugins.gui.compose.account.AccountDetailView
 import com.p4ddy.paddycrm.plugins.gui.compose.account.AccountListView
@@ -44,7 +43,7 @@ fun MainView() {
 					modifier = Modifier.align(Alignment.CenterStart).fillMaxHeight()
 				) {
 					screens.forEach {
-						if(it.showInNavBar) {
+						if (it.showInNavBar) {
 							NavigationRailItem(
 								selected = currentScreen == it.name,
 								icon = {

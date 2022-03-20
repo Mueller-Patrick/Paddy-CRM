@@ -1,6 +1,5 @@
 package com.p4ddy.paddycrm.plugins.persistence.exposed.user
 
-import com.p4ddy.paddycrm.application.user.UserSingleton
 import com.p4ddy.paddycrm.domain.user.User
 import com.p4ddy.paddycrm.domain.user.UserRepo
 import com.p4ddy.paddycrm.domain.user.UserTypes
@@ -13,7 +12,6 @@ import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.UserTable.email
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.UserTable.firstName
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.UserTable.lastName
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.UserTable.managerId
-import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.UserTable.password
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.UserTable.userId
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.UserTable.userType
 import org.jetbrains.exposed.sql.*

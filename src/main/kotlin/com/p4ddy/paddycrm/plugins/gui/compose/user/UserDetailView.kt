@@ -1,8 +1,6 @@
 package com.p4ddy.paddycrm.plugins.gui.compose.user
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.Button
 import androidx.compose.material.Text
@@ -127,7 +125,7 @@ fun UserDetailView(
 					)
 				}
 
-				if(navController.navigateParam != -1) {
+				if (navController.navigateParam != -1) {
 					DetailColumnTemplateRight("Manager", modifier = Modifier.weight(1F)) {
 						Text(
 							text = thisUserBE.managerName

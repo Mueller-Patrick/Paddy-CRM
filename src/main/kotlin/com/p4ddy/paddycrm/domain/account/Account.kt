@@ -22,5 +22,4 @@ data class Account(
 	var shippingAddress: AddressVO = billingAddress,
 	val accountId: Int = -1,
 	val createdDate: LocalDate = LocalDate.now(),
-) {
-}
+)

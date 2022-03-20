@@ -13,7 +13,6 @@ import com.p4ddy.paddycrm.plugins.persistence.exposed.opportunity.OpportunityExp
 import com.p4ddy.paddycrm.plugins.persistence.exposed.user.UserExposedRepo
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import javax.swing.text.DateFormatter
 
 fun generateDemoData() {
 	val acctService = AccountApplicationService(AccountExposedRepo())

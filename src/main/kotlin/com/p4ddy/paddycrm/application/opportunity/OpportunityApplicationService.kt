@@ -62,7 +62,7 @@ class OpportunityApplicationService(
 
 	/**
 	 * Saves the given oppty to the database
-	 * 
+	 *
 	 * @param oppty The oppty to save
 	 * @return The created oppty object
 	 */

@@ -33,5 +33,4 @@ data class ContactBE(
 	var addressStreetAndNumber: String,
 	var contactId: Int = -1,
 	val createdDate: LocalDate = LocalDate.now()
-) {
-}
+)

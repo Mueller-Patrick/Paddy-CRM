@@ -30,5 +30,4 @@ data class Opportunity(
 	var stage: OpportunityStage = OpportunityStage.PROSPECTING,
 	val opportunityId: Int = -1,
 	val createdDate: LocalDate = LocalDate.now()
-) {
-}
+)

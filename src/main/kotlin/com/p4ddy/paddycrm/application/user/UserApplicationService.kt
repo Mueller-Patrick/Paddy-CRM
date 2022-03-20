@@ -3,7 +3,6 @@ package com.p4ddy.paddycrm.application.user
 import com.p4ddy.paddycrm.domain.user.User
 import com.p4ddy.paddycrm.domain.user.UserRepo
 import com.p4ddy.paddycrm.domain.user.UserTypes
-import java.time.LocalDate
 
 /**
  * User application service class

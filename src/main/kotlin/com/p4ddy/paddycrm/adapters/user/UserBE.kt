@@ -5,7 +5,7 @@ import java.time.LocalDate
 
 /**
  * User Business Entity for usage in the GUI
- * 
+ *
  * @property lastName The last name of the user
  * @property firstName The first name of the user
  * @property password The password of the user
@@ -25,5 +25,4 @@ data class UserBE(
 	var userType: UserTypes = UserTypes.SALESREP,
 	val userId: Int = -1,
 	val createdDate: LocalDate = LocalDate.now()
-) {
-}
+)

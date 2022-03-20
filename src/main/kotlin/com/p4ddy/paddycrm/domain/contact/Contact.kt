@@ -2,7 +2,6 @@ package com.p4ddy.paddycrm.domain.contact
 
 import com.p4ddy.paddycrm.domain.address.AddressVO
 import java.time.LocalDate
-import java.util.*
 
 /**
  * Contact domain entity
@@ -27,5 +26,4 @@ data class Contact(
 	var address: AddressVO,
 	val contactId: Int = -1,
 	val createdDate: LocalDate = LocalDate.now()
-) {
-}
+)

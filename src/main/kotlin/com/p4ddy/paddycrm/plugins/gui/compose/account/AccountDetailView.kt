@@ -1,7 +1,10 @@
 package com.p4ddy.paddycrm.plugins.gui.compose.account
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldColors
 import androidx.compose.material.TextFieldDefaults.textFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -9,11 +12,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.p4ddy.paddycrm.adapters.account.AccountBE
 import com.p4ddy.paddycrm.adapters.account.AccountConverter
 import com.p4ddy.paddycrm.application.account.AccountApplicationService
@@ -25,7 +25,6 @@ import com.p4ddy.paddycrm.plugins.gui.compose.navigation.Screen
 import com.p4ddy.paddycrm.plugins.persistence.exposed.account.AccountExposedRepo
 import com.p4ddy.paddycrm.plugins.persistence.exposed.user.UserExposedRepo
 import java.time.format.DateTimeFormatter
-import javax.swing.text.StyledEditorKit
 
 @Composable
 fun AccountDetailView(

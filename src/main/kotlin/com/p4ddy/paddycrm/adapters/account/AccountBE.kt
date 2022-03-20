@@ -1,6 +1,5 @@
 package com.p4ddy.paddycrm.adapters.account
 
-import com.p4ddy.paddycrm.domain.address.AddressVO
 import java.time.LocalDate
 
 /**
@@ -34,5 +33,4 @@ data class AccountBE(
 	var shippingStreetAndNumber: String,
 	val accountId: Int = -1,
 	val createdDate: LocalDate = LocalDate.now(),
-) {
-}
+)
