@@ -16,6 +16,13 @@ data class AddressVO(
 	val streetAndNumber: String
 ) {
 	init {
+		checkForInvalidParams()
+	}
+
+	/**
+	 * Check, if any of the parameters contains illegal values and throw an error if this is the case
+	 */
+	private fun checkForInvalidParams() {
 		if (
 			country.isBlank()
 			|| city.isBlank()

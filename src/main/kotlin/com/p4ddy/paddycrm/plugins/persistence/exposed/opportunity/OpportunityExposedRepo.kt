@@ -30,19 +30,7 @@ class OpportunityExposedRepo : OpportunityRepo {
 		transaction {
 			for (opptyRow in OpportunityTable.select(getUserVisibilityQueryClause())) {
 				opptyList.add(
-					Opportunity(
-						name = opptyRow[name],
-						accountId = opptyRow[accountId],
-						amount = opptyRow[amount],
-						closeDate = opptyRow[closeDate],
-						ownerId = opptyRow[ownerId],
-						product = opptyRow[product],
-						probability = opptyRow[probability],
-						quantity = opptyRow[quantity],
-						stage = OpportunityStage.valueOf(opptyRow[stage]),
-						opportunityId = opptyRow[opportunityId],
-						createdDate = opptyRow[createdDate]
-					)
+					convertResultRowToOppty(opptyRow)
 				)
 			}
 		}
@@ -61,19 +49,7 @@ class OpportunityExposedRepo : OpportunityRepo {
 			throw Exception("Error reading from the database")
 		}
 
-		return Opportunity(
-			name = resultRow!![name],
-			accountId = resultRow!![accountId],
-			amount = resultRow!![amount],
-			closeDate = resultRow!![closeDate],
-			ownerId = resultRow!![ownerId],
-			product = resultRow!![product],
-			probability = resultRow!![probability],
-			quantity = resultRow!![quantity],
-			stage = OpportunityStage.valueOf(resultRow!![stage]),
-			opportunityId = resultRow!![opportunityId],
-			createdDate = resultRow!![createdDate]
-		)
+		return convertResultRowToOppty(resultRow!!)
 	}
 
 	override fun save(oppty: Opportunity): Opportunity {
@@ -164,4 +140,24 @@ class OpportunityExposedRepo : OpportunityRepo {
 
 		return queryFilter
 	}
+
+	/**
+	 * Converts a row from the database into an opportunity object
+	 *
+	 * @param opptyRow The row from the database
+	 * @return The converted Opportunity Object
+	 */
+	private fun convertResultRowToOppty(opptyRow: ResultRow) = Opportunity(
+		name = opptyRow[name],
+		accountId = opptyRow[accountId],
+		amount = opptyRow[amount],
+		closeDate = opptyRow[closeDate],
+		ownerId = opptyRow[ownerId],
+		product = opptyRow[product],
+		probability = opptyRow[probability],
+		quantity = opptyRow[quantity],
+		stage = OpportunityStage.valueOf(opptyRow[stage]),
+		opportunityId = opptyRow[opportunityId],
+		createdDate = opptyRow[createdDate]
+	)
 }

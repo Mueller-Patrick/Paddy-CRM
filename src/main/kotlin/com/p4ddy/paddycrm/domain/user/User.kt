@@ -27,6 +27,13 @@ data class User(
 	val createdDate: LocalDate = LocalDate.now()
 ) {
 	init {
+		checkForInvalidParams()
+	}
+
+	/**
+	 * Checks, if the combination of user type and provided manager id is valid and throws an error if this is not the case
+	 */
+	private fun checkForInvalidParams() {
 		if (userType == UserTypes.SALESREP && managerId == -1) {
 			throw Exception("Sales Reps have to have a manager assigned!")
 		} else if (userType == UserTypes.MANAGER && managerId != -1) {

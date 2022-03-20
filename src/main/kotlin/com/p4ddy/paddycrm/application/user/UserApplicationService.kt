@@ -69,12 +69,7 @@ class UserApplicationService(
 		email: String,
 		managerId: Int
 	): User {
-		if (UserSingleton.user == null) {
-			throw Exception("Can't create user when no user is logged in")
-		}
-		if (UserSingleton.user!!.userType != UserTypes.ADMIN) {
-			throw Exception("Only system administrators may create users")
-		}
+		checkUserPrivilegesForCreatingUsers()
 
 		val user = User(lastName, firstName, password, email, UserTypes.SALESREP, managerId)
 		return userRepo.save(user)
@@ -95,12 +90,7 @@ class UserApplicationService(
 		password: String,
 		email: String
 	): User {
-		if (UserSingleton.user == null) {
-			throw Exception("Can't create user when no user is logged in")
-		}
-		if (UserSingleton.user!!.userType != UserTypes.ADMIN) {
-			throw Exception("Only system administrators may create users")
-		}
+		checkUserPrivilegesForCreatingUsers()
 
 		val user = User(lastName, firstName, password, email, UserTypes.MANAGER)
 		return userRepo.save(user)
@@ -123,12 +113,7 @@ class UserApplicationService(
 	): User {
 		// So we can initially create an admin account upon first start without getting an Exception
 		if (userRepo.findAll().isNotEmpty()) {
-			if (UserSingleton.user == null) {
-				throw Exception("Can't create user when no user is logged in")
-			}
-			if (UserSingleton.user!!.userType != UserTypes.ADMIN) {
-				throw Exception("Only system administrators may create users")
-			}
+			checkUserPrivilegesForCreatingUsers()
 		}
 
 		val user = User(lastName, firstName, password, email, UserTypes.ADMIN)
@@ -166,5 +151,17 @@ class UserApplicationService(
 		}
 
 		return userRepo.delete(user)
+	}
+
+	/**
+	 * Checks if the the user has the required privileges and throws an error if this is not the case
+	 */
+	private fun checkUserPrivilegesForCreatingUsers() {
+		if (UserSingleton.user == null) {
+			throw Exception("Can't create user when no user is logged in")
+		}
+		if (UserSingleton.user!!.userType != UserTypes.ADMIN) {
+			throw Exception("Only system administrators may create users")
+		}
 	}
 }

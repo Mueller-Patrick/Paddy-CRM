@@ -30,21 +30,7 @@ class ContactExposedRepo : ContactRepo {
 		transaction {
 			for (contactRow in ContactTable.select(getUserVisibilityQueryClause())) {
 				contactList.add(
-					Contact(
-						accountId = contactRow[accountId],
-						ownerId = contactRow[ownerId],
-						salutation = contactRow[salutation],
-						lastName = contactRow[lastName],
-						firstName = contactRow[firstName],
-						address = AddressVO(
-							country = contactRow[addressCountry],
-							city = contactRow[addressCity],
-							zipCode = contactRow[addressZipCode],
-							streetAndNumber = contactRow[addressStreetAndNumber]
-						),
-						contactId = contactRow[contactId],
-						createdDate = contactRow[createdDate]
-					)
+					convertResultRowToContact(contactRow)
 				)
 			}
 		}
@@ -63,21 +49,7 @@ class ContactExposedRepo : ContactRepo {
 			throw Exception("Error reading from the database")
 		}
 
-		return Contact(
-			accountId = resultRow!![accountId],
-			ownerId = resultRow!![ownerId],
-			salutation = resultRow!![salutation],
-			lastName = resultRow!![lastName],
-			firstName = resultRow!![firstName],
-			address = AddressVO(
-				country = resultRow!![addressCountry],
-				city = resultRow!![addressCity],
-				zipCode = resultRow!![addressZipCode],
-				streetAndNumber = resultRow!![addressStreetAndNumber]
-			),
-			contactId = resultRow!![contactId],
-			createdDate = resultRow!![createdDate]
-		)
+		return convertResultRowToContact(resultRow!!)
 	}
 
 	override fun save(cont: Contact): Contact {
@@ -168,4 +140,26 @@ class ContactExposedRepo : ContactRepo {
 
 		return queryFilter
 	}
+
+	/**
+	 * Converts a row from the database into a contact object
+	 *
+	 * @param contactRow The row from the database
+	 * @return The converted Contact Object
+	 */
+	private fun convertResultRowToContact(contactRow: ResultRow) = Contact(
+		accountId = contactRow[accountId],
+		ownerId = contactRow[ownerId],
+		salutation = contactRow[salutation],
+		lastName = contactRow[lastName],
+		firstName = contactRow[firstName],
+		address = AddressVO(
+			country = contactRow[addressCountry],
+			city = contactRow[addressCity],
+			zipCode = contactRow[addressZipCode],
+			streetAndNumber = contactRow[addressStreetAndNumber]
+		),
+		contactId = contactRow[contactId],
+		createdDate = contactRow[createdDate]
+	)
 }

@@ -25,16 +25,7 @@ class UserExposedRepo : UserRepo {
 		transaction {
 			for (userRow in UserTable.selectAll()) {
 				userList.add(
-					User(
-						lastName = userRow[lastName],
-						firstName = userRow[firstName],
-						password = "PROTECTED",
-						email = userRow[email],
-						userType = UserTypes.valueOf(userRow[userType]),
-						managerId = userRow[managerId],
-						userId = userRow[userId],
-						createdDate = userRow[createdDate]
-					)
+					convertResultRowToUser(userRow)
 				)
 			}
 		}
@@ -53,16 +44,7 @@ class UserExposedRepo : UserRepo {
 			throw Exception("Error reading from the database")
 		}
 
-		return User(
-			lastName = resultRow!![lastName],
-			firstName = resultRow!![firstName],
-			password = "PROTECTED",
-			email = resultRow!![email],
-			userType = UserTypes.valueOf(resultRow!![userType]),
-			managerId = resultRow!![managerId],
-			userId = resultRow!![userId],
-			createdDate = resultRow!![createdDate]
-		)
+		return convertResultRowToUser(resultRow!!)
 	}
 
 	override fun findByEmail(email: String): User {
@@ -147,4 +129,21 @@ class UserExposedRepo : UserRepo {
 			OpportunityTable.deleteWhere { OpportunityTable.ownerId.eq(user.userId) }
 		}
 	}
+
+	/**
+	 * Converts a row from the database into a user object
+	 *
+	 * @param userRow The row from the database
+	 * @return The converted User Object
+	 */
+	private fun convertResultRowToUser(userRow: ResultRow) = User(
+		lastName = userRow[lastName],
+		firstName = userRow[firstName],
+		password = "PROTECTED",
+		email = userRow[email],
+		userType = UserTypes.valueOf(userRow[userType]),
+		managerId = userRow[managerId],
+		userId = userRow[userId],
+		createdDate = userRow[createdDate]
+	)
 }

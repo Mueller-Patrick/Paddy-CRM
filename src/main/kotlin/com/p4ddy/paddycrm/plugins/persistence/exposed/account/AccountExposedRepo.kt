@@ -35,24 +35,7 @@ class AccountExposedRepo : AccountRepo {
 		transaction {
 			for (accountRow in AccountTable.select(getUserVisibilityQueryClause())) {
 				accountList.add(
-					Account(
-						name = accountRow[name],
-						ownerId = accountRow[ownerId],
-						billingAddress = AddressVO(
-							accountRow[billingAddressCountry],
-							accountRow[billingAddressCity],
-							accountRow[billingAddressZipCode],
-							accountRow[billingAddressStreetAndNumber]
-						),
-						shippingAddress = AddressVO(
-							accountRow[shippingAddressCountry],
-							accountRow[shippingAddressCity],
-							accountRow[shippingAddressZipCode],
-							accountRow[shippingAddressStreetAndNumber]
-						),
-						accountId = accountRow[accountId],
-						createdDate = accountRow[createdDate]
-					)
+					convertResultRowToAccount(accountRow)
 				)
 			}
 		}
@@ -71,24 +54,7 @@ class AccountExposedRepo : AccountRepo {
 			throw Exception("Error reading from the database")
 		}
 
-		return Account(
-			name = resultRow!![name],
-			ownerId = resultRow!![ownerId],
-			billingAddress = AddressVO(
-				resultRow!![billingAddressCountry],
-				resultRow!![billingAddressCity],
-				resultRow!![billingAddressZipCode],
-				resultRow!![billingAddressStreetAndNumber]
-			),
-			shippingAddress = AddressVO(
-				resultRow!![shippingAddressCountry],
-				resultRow!![shippingAddressCity],
-				resultRow!![shippingAddressZipCode],
-				resultRow!![shippingAddressStreetAndNumber]
-			),
-			accountId = resultRow!![accountId],
-			createdDate = resultRow!![createdDate]
-		)
+		return convertResultRowToAccount(resultRow!!)
 	}
 
 	override fun save(acct: Account): Account {
@@ -186,4 +152,29 @@ class AccountExposedRepo : AccountRepo {
 
 		return queryFilter
 	}
+
+	/**
+	 * Converts a row from the database into an account object
+	 *
+	 * @param accountRow The row from the database
+	 * @return The converted Account Object
+	 */
+	private fun convertResultRowToAccount(accountRow: ResultRow) = Account(
+		name = accountRow[name],
+		ownerId = accountRow[ownerId],
+		billingAddress = AddressVO(
+			accountRow[billingAddressCountry],
+			accountRow[billingAddressCity],
+			accountRow[billingAddressZipCode],
+			accountRow[billingAddressStreetAndNumber]
+		),
+		shippingAddress = AddressVO(
+			accountRow[shippingAddressCountry],
+			accountRow[shippingAddressCity],
+			accountRow[shippingAddressZipCode],
+			accountRow[shippingAddressStreetAndNumber]
+		),
+		accountId = accountRow[accountId],
+		createdDate = accountRow[createdDate]
+	)
 }
