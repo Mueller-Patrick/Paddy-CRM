@@ -7,8 +7,10 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.assertThrows
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class UserApplicationServiceTest {
 	var userRepo: UserRepo = UserRepoMock()
 	var userService: UserApplicationService? = null
@@ -52,17 +54,17 @@ internal class UserApplicationServiceTest {
 		val exceptionAdmin = assertThrows<Exception> {
 			userService!!.createAdmin("Last", "First", "Password", "email@admin.org")
 		}
-		assertEquals(exceptionAdmin.message, "Only system administrators may create users")
+		assertEquals("Only system administrators may create users", exceptionAdmin.message)
 
 		val exceptionManager = assertThrows<Exception> {
 			userService!!.createManager("Last", "First", "Password", "email@manager.org")
 		}
-		assertEquals(exceptionManager.message, "Only system administrators may create users")
+		assertEquals("Only system administrators may create users", exceptionManager.message)
 
 		val exceptionSalesrep = assertThrows<Exception> {
 			userService!!.createSalesRep("Last", "First", "Password", "email@salesrep.org", 1337)
 		}
-		assertEquals(exceptionSalesrep.message, "Only system administrators may create users")
+		assertEquals("Only system administrators may create users", exceptionSalesrep.message)
 	}
 
 	@Test
@@ -80,17 +82,17 @@ internal class UserApplicationServiceTest {
 		val exceptionAdmin = assertThrows<Exception> {
 			userService!!.createAdmin("Last", "First", "Password", "email@admin.org")
 		}
-		assertEquals(exceptionAdmin.message, "Only system administrators may create users")
+		assertEquals("Only system administrators may create users", exceptionAdmin.message)
 
 		val exceptionManager = assertThrows<Exception> {
 			userService!!.createManager("Last", "First", "Password", "email@manager.org")
 		}
-		assertEquals(exceptionManager.message, "Only system administrators may create users")
+		assertEquals("Only system administrators may create users", exceptionManager.message)
 
 		val exceptionSalesrep = assertThrows<Exception> {
 			userService!!.createSalesRep("Last", "First", "Password", "email@salesrep.org", 1337)
 		}
-		assertEquals(exceptionSalesrep.message, "Only system administrators may create users")
+		assertEquals("Only system administrators may create users", exceptionSalesrep.message)
 	}
 
 	@Test
@@ -100,17 +102,17 @@ internal class UserApplicationServiceTest {
 		val exceptionAdmin = assertThrows<Exception> {
 			userService!!.createAdmin("Last", "First", "Password", "email@admin.org")
 		}
-		assertEquals(exceptionAdmin.message, "Can't create user when no user is logged in")
+		assertEquals("Can't create user when no user is logged in", exceptionAdmin.message)
 
 		val exceptionManager = assertThrows<Exception> {
 			userService!!.createManager("Last", "First", "Password", "email@manager.org")
 		}
-		assertEquals(exceptionManager.message, "Can't create user when no user is logged in")
+		assertEquals("Can't create user when no user is logged in", exceptionManager.message)
 
 		val exceptionSalesrep = assertThrows<Exception> {
 			userService!!.createSalesRep("Last", "First", "Password", "email@salesrep.org", 1337)
 		}
-		assertEquals(exceptionSalesrep.message, "Can't create user when no user is logged in")
+		assertEquals("Can't create user when no user is logged in", exceptionSalesrep.message)
 	}
 
 	@Test
@@ -135,13 +137,13 @@ internal class UserApplicationServiceTest {
 		)
 
 		val user1 = userService!!.updateUser(salesrep)
-		assertEquals(user1.userId, 1337)
+		assertEquals(1337, user1.userId)
 
 
 		salesrep.email = "test2@unit.test"
 		UserSingleton.user = salesrep
 		val user2 = userService!!.updateUser(salesrep)
-		assertEquals(user2.email, "test2@unit.test")
+		assertEquals("test2@unit.test", user2.email)
 	}
 
 	@Test
@@ -170,7 +172,7 @@ internal class UserApplicationServiceTest {
 		val exception = assertThrows<Exception> {
 			userService!!.updateUser(salesrep2)
 		}
-		assertEquals(exception.message, "Only admins and the users themselves may update a user record")
+		assertEquals("Only admins and the users themselves may update a user record", exception.message)
 	}
 
 	@Test
@@ -223,6 +225,6 @@ internal class UserApplicationServiceTest {
 		val exception = assertThrows<Exception> {
 			userService!!.deleteUser(salesrep2)
 		}
-		assertEquals(exception.message, "Only admins may delete a user record")
+		assertEquals("Only admins may delete a user record", exception.message)
 	}
 }

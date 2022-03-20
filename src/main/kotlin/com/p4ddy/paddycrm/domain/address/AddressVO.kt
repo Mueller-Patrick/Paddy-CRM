@@ -25,6 +25,12 @@ data class AddressVO(
 			throw Exception("No empty values allowed in address")
 		}
 
+		try {
+			zipCode.toInt()
+		} catch (e: Exception) {
+			throw Exception("zipCode must be a number")
+		}
+
 		if (zipCode.toInt() < 0 || zipCode.toInt() > 99999) {
 			throw Exception("zipCode must be between 0 and 99999")
 		}
