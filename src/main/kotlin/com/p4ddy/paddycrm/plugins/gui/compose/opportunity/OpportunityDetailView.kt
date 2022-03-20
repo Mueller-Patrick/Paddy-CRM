@@ -22,6 +22,7 @@ import com.p4ddy.paddycrm.domain.opportunity.OpportunityRepo
 import com.p4ddy.paddycrm.domain.opportunity.OpportunityStage
 import com.p4ddy.paddycrm.plugins.gui.compose.account.getTextfieldBackgroundColor
 import com.p4ddy.paddycrm.plugins.gui.compose.layout.*
+import com.p4ddy.paddycrm.plugins.gui.compose.misc.DialogDemo
 import com.p4ddy.paddycrm.plugins.gui.compose.navigation.NavController
 import com.p4ddy.paddycrm.plugins.gui.compose.navigation.Screen
 import com.p4ddy.paddycrm.plugins.persistence.exposed.account.AccountExposedRepo
@@ -72,13 +73,13 @@ fun OpportunityDetailView(
 	val stage = remember { mutableStateOf(TextFieldValue(thisOpptyBE.stage.toString())) }
 
 	val isEditMode = remember { mutableStateOf(startInEditMode) }
+	val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
+	val errorMessage = remember { mutableStateOf("") }
 
 	Column {
 		ControlButtonSection {
 			Button(onClick = {
 				if (isEditMode.value) {
-					isEditMode.value = false
-
 					thisOpptyBE.name = name.value.text
 					thisOpptyBE.accountId = accountId.value.text.toInt()
 					thisOpptyBE.amount = amount.value.text.toFloat()
@@ -88,14 +89,34 @@ fun OpportunityDetailView(
 					thisOpptyBE.quantity = quantity.value.text.toInt()
 					thisOpptyBE.stage = OpportunityStage.valueOf(stage.value.text)
 
-					val oppty = opptyConverter.convertBEToOpportunity(thisOpptyBE)
+					val oppty = try {
+						opptyConverter.convertBEToOpportunity(thisOpptyBE)
+					} catch (e: Exception) {
+						errorMessage.value = e.localizedMessage
+						setShowDialog(true)
+						return@Button
+					}
 
 					if (navController.navigateParam != -1) {
-						opptyService.updateOpportunity(oppty)
+						try {
+							opptyService.updateOpportunity(oppty)
+						} catch (e: Exception) {
+							errorMessage.value = e.localizedMessage
+							setShowDialog(true)
+							return@Button
+						}
 					} else {
-						val createdOppty = opptyService.createOpportunity(oppty)
-						navController.navigate(Screen.OpportunityDetailView.name, createdOppty.opportunityId)
+						try {
+							val createdOppty = opptyService.createOpportunity(oppty)
+							navController.navigate(Screen.OpportunityDetailView.name, createdOppty.opportunityId)
+						} catch (e: Exception) {
+							errorMessage.value = e.localizedMessage
+							setShowDialog(true)
+							return@Button
+						}
 					}
+
+					isEditMode.value = false
 				} else {
 					isEditMode.value = true
 				}
@@ -111,8 +132,14 @@ fun OpportunityDetailView(
 				Spacer(modifier = Modifier.width(10.dp))
 
 				Button(onClick = {
-					opptyService.deleteOpportunity(thisOppty!!)
-					navController.navigate(Screen.ContactListView.name)
+					try {
+						opptyService.deleteOpportunity(thisOppty!!)
+						navController.navigate(Screen.ContactListView.name)
+					} catch (e: Exception) {
+						errorMessage.value = e.localizedMessage
+						setShowDialog(true)
+						return@Button
+					}
 				}) {
 					Text("Delete")
 				}
@@ -262,5 +289,6 @@ fun OpportunityDetailView(
 				)
 			}
 		}
+		DialogDemo(showDialog, errorMessage.value, setShowDialog)
 	}
 }
