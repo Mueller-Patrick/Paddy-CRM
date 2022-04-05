@@ -1,8 +1,10 @@
 package com.p4ddy.paddycrm.application.user
 
+import com.p4ddy.paddycrm.application.session.SessionManager
 import com.p4ddy.paddycrm.domain.user.User
 import com.p4ddy.paddycrm.domain.user.UserRepo
 import com.p4ddy.paddycrm.domain.user.UserTypes
+import com.p4ddy.paddycrm.plugins.session.SingletonSessionManager
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -14,10 +16,11 @@ import org.junit.jupiter.api.assertThrows
 internal class UserApplicationServiceTest {
 	var userRepo: UserRepo = UserRepoMock()
 	var userService: UserApplicationService? = null
+	var sessionManager: SessionManager = SingletonSessionManager()
 
 	@BeforeEach
 	fun setUp() {
-		userService = UserApplicationService(userRepo)
+		userService = UserApplicationService(userRepo, sessionManager)
 	}
 
 	@Test
@@ -29,7 +32,7 @@ internal class UserApplicationServiceTest {
 			"admin@admin.admin",
 			UserTypes.ADMIN
 		)
-		UserSingleton.user = admin
+		sessionManager.setCurrentUser(admin)
 
 		val testadmin = userService!!.createAdmin("Last", "First", "Password", "email@admin.org")
 		val testmanager = userService!!.createManager("Last", "First", "Password", "email@manager.org")
@@ -49,7 +52,7 @@ internal class UserApplicationServiceTest {
 			"admin@admin.admin",
 			UserTypes.MANAGER
 		)
-		UserSingleton.user = manager
+		sessionManager.setCurrentUser(manager)
 
 		val exceptionAdmin = assertThrows<Exception> {
 			userService!!.createAdmin("Last", "First", "Password", "email@admin.org")
@@ -77,7 +80,7 @@ internal class UserApplicationServiceTest {
 			UserTypes.SALESREP,
 			1337
 		)
-		UserSingleton.user = salesrep
+		sessionManager.setCurrentUser(salesrep)
 
 		val exceptionAdmin = assertThrows<Exception> {
 			userService!!.createAdmin("Last", "First", "Password", "email@admin.org")
@@ -97,7 +100,7 @@ internal class UserApplicationServiceTest {
 
 	@Test
 	fun createUserNotLoggedIn() {
-		UserSingleton.user = null
+		sessionManager.setCurrentUser(null)
 
 		val exceptionAdmin = assertThrows<Exception> {
 			userService!!.createAdmin("Last", "First", "Password", "email@admin.org")
@@ -124,7 +127,7 @@ internal class UserApplicationServiceTest {
 			"admin@admin.admin",
 			UserTypes.ADMIN
 		)
-		UserSingleton.user = admin
+		sessionManager.setCurrentUser(admin)
 
 		val salesrep = User(
 			"Admin",
@@ -141,7 +144,7 @@ internal class UserApplicationServiceTest {
 
 
 		salesrep.email = "test2@unit.test"
-		UserSingleton.user = salesrep
+		sessionManager.setCurrentUser(salesrep)
 		val user2 = userService!!.updateUser(salesrep)
 		assertEquals("test2@unit.test", user2.email)
 	}
@@ -157,7 +160,7 @@ internal class UserApplicationServiceTest {
 			managerId = 1,
 			userId = 1337
 		)
-		UserSingleton.user = salesrep1
+		sessionManager.setCurrentUser(salesrep1)
 
 		val salesrep2 = User(
 			"Admin",
@@ -184,7 +187,7 @@ internal class UserApplicationServiceTest {
 			"admin@admin.admin",
 			UserTypes.ADMIN
 		)
-		UserSingleton.user = admin
+		sessionManager.setCurrentUser(admin)
 
 		val salesrep = User(
 			"Admin",
@@ -210,7 +213,7 @@ internal class UserApplicationServiceTest {
 			managerId = 1,
 			userId = 1337
 		)
-		UserSingleton.user = salesrep1
+		sessionManager.setCurrentUser(salesrep1)
 
 		val salesrep2 = User(
 			"Admin",

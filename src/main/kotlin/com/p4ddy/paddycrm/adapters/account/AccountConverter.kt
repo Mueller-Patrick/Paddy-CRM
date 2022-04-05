@@ -1,5 +1,6 @@
 package com.p4ddy.paddycrm.adapters.account
 
+import com.p4ddy.paddycrm.application.session.SessionManager
 import com.p4ddy.paddycrm.application.user.UserApplicationService
 import com.p4ddy.paddycrm.domain.account.Account
 import com.p4ddy.paddycrm.domain.address.AddressVO
@@ -10,7 +11,8 @@ import com.p4ddy.paddycrm.domain.user.UserRepo
  */
 class AccountConverter(
 	val userRepo: UserRepo,
-	val userApplicationService: UserApplicationService = UserApplicationService(userRepo)
+	val sessionManager: SessionManager,
+	val userApplicationService: UserApplicationService = UserApplicationService(userRepo, sessionManager)
 ) {
 	/**
 	 * Converts an AccountBE object to an Account object
