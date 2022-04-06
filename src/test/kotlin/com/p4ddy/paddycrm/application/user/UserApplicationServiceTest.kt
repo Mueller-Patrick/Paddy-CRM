@@ -4,7 +4,9 @@ import com.p4ddy.paddycrm.application.session.SessionManager
 import com.p4ddy.paddycrm.domain.user.User
 import com.p4ddy.paddycrm.domain.user.UserRepo
 import com.p4ddy.paddycrm.domain.user.UserTypes
+import com.p4ddy.paddycrm.plugins.persistence.exposed.user.UserExposedRepo
 import com.p4ddy.paddycrm.plugins.session.SingletonSessionManager
+import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -199,7 +201,10 @@ internal class UserApplicationServiceTest {
 			userId = 1337
 		)
 
-		assertDoesNotThrow { userService!!.deleteUser(salesrep) }
+		val mockkRepo = mockk<UserExposedRepo>(relaxed = true)
+		val mockkUserService = UserApplicationService(mockkRepo, sessionManager)
+
+		assertDoesNotThrow { mockkUserService.deleteUser(salesrep) }
 	}
 
 	@Test
@@ -225,8 +230,11 @@ internal class UserApplicationServiceTest {
 			userId = 1338
 		)
 
+		val mockkRepo = mockk<UserExposedRepo>(relaxed = true)
+		val mockkUserService = UserApplicationService(mockkRepo, sessionManager)
+
 		val exception = assertThrows<Exception> {
-			userService!!.deleteUser(salesrep2)
+			mockkUserService.deleteUser(salesrep2)
 		}
 		assertEquals("Only admins may delete a user record", exception.message)
 	}
