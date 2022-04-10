@@ -1,5 +1,6 @@
 package com.p4ddy.paddycrm.adapters.user
 
+import com.p4ddy.paddycrm.application.session.SessionManager
 import com.p4ddy.paddycrm.application.user.UserApplicationService
 import com.p4ddy.paddycrm.domain.user.User
 import com.p4ddy.paddycrm.domain.user.UserRepo
@@ -9,7 +10,8 @@ import com.p4ddy.paddycrm.domain.user.UserRepo
  */
 class UserConverter(
 	val userRepo: UserRepo,
-	val userApplicationService: UserApplicationService = UserApplicationService(userRepo)
+	val sessionManager: SessionManager,
+	val userApplicationService: UserApplicationService = UserApplicationService(userRepo, sessionManager)
 ) {
 	/**
 	 * Converts a UserBE object to a User object

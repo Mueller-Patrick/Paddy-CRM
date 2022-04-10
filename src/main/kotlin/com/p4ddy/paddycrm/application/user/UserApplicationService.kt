@@ -1,5 +1,6 @@
 package com.p4ddy.paddycrm.application.user
 
+import com.p4ddy.paddycrm.application.session.SessionManager
 import com.p4ddy.paddycrm.domain.user.User
 import com.p4ddy.paddycrm.domain.user.UserRepo
 import com.p4ddy.paddycrm.domain.user.UserTypes
@@ -10,8 +11,10 @@ import com.p4ddy.paddycrm.domain.user.UserTypes
  * @param userRepo User repository to use for persistence
  */
 class UserApplicationService(
-	val userRepo: UserRepo
+	val userRepo: UserRepo,
+	val sessionManager: SessionManager
 ) {
+
 	/**
 	 * Find all users
 	 *
@@ -67,7 +70,7 @@ class UserApplicationService(
 		firstName: String,
 		password: String,
 		email: String,
-		managerId: Int
+		managerId: Int,
 	): User {
 		checkUserPrivilegesForCreatingUsers()
 
@@ -88,7 +91,7 @@ class UserApplicationService(
 		lastName: String,
 		firstName: String,
 		password: String,
-		email: String
+		email: String,
 	): User {
 		checkUserPrivilegesForCreatingUsers()
 
@@ -109,7 +112,7 @@ class UserApplicationService(
 		lastName: String,
 		firstName: String,
 		password: String,
-		email: String
+		email: String,
 	): User {
 		// So we can initially create an admin account upon first start without getting an Exception
 		if (userRepo.findAll().isNotEmpty()) {
@@ -127,10 +130,13 @@ class UserApplicationService(
 	 * @return The updated user object
 	 */
 	fun updateUser(user: User): User {
-		if (UserSingleton.user == null) {
+		if (!sessionManager.checkIfUserIsLoggedIn()) {
 			throw Exception("Can't update a user when no user is currently logged in")
 		}
-		if (UserSingleton.user!!.userType != UserTypes.ADMIN && UserSingleton.user!!.userId != user.userId) {
+		if (
+			sessionManager.getCurrentUser().userType != UserTypes.ADMIN
+			&& sessionManager.getCurrentUser().userId != user.userId
+		) {
 			throw Exception("Only admins and the users themselves may update a user record")
 		}
 
@@ -143,10 +149,10 @@ class UserApplicationService(
 	 * @param user: The user to delete
 	 */
 	fun deleteUser(user: User) {
-		if (UserSingleton.user == null) {
+		if (!sessionManager.checkIfUserIsLoggedIn()) {
 			throw Exception("Can't update a user when no user is currently logged in")
 		}
-		if (UserSingleton.user!!.userType != UserTypes.ADMIN) {
+		if (sessionManager.getCurrentUser().userType != UserTypes.ADMIN) {
 			throw Exception("Only admins may delete a user record")
 		}
 
@@ -157,10 +163,10 @@ class UserApplicationService(
 	 * Checks if the the user has the required privileges and throws an error if this is not the case
 	 */
 	private fun checkUserPrivilegesForCreatingUsers() {
-		if (UserSingleton.user == null) {
+		if (!sessionManager.checkIfUserIsLoggedIn()) {
 			throw Exception("Can't create user when no user is logged in")
 		}
-		if (UserSingleton.user!!.userType != UserTypes.ADMIN) {
+		if (sessionManager.getCurrentUser().userType != UserTypes.ADMIN) {
 			throw Exception("Only system administrators may create users")
 		}
 	}

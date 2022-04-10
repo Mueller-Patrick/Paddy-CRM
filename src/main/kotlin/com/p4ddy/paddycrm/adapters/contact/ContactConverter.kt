@@ -1,6 +1,7 @@
 package com.p4ddy.paddycrm.adapters.contact
 
 import com.p4ddy.paddycrm.application.account.AccountApplicationService
+import com.p4ddy.paddycrm.application.session.SessionManager
 import com.p4ddy.paddycrm.application.user.UserApplicationService
 import com.p4ddy.paddycrm.domain.account.AccountRepo
 import com.p4ddy.paddycrm.domain.address.AddressVO
@@ -13,7 +14,8 @@ import com.p4ddy.paddycrm.domain.user.UserRepo
 class ContactConverter(
 	val userRepo: UserRepo,
 	val acctRepo: AccountRepo,
-	val userApplicationService: UserApplicationService = UserApplicationService(userRepo),
+	val sessionManager: SessionManager,
+	val userApplicationService: UserApplicationService = UserApplicationService(userRepo, sessionManager),
 	val accountApplicationService: AccountApplicationService = AccountApplicationService(acctRepo)
 ) {
 	/**

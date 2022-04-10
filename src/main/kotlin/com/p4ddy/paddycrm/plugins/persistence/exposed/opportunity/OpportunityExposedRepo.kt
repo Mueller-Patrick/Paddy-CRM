@@ -1,6 +1,6 @@
 package com.p4ddy.paddycrm.plugins.persistence.exposed.opportunity
 
-import com.p4ddy.paddycrm.application.user.UserSingleton
+import com.p4ddy.paddycrm.application.session.SessionManager
 import com.p4ddy.paddycrm.domain.opportunity.Opportunity
 import com.p4ddy.paddycrm.domain.opportunity.OpportunityRepo
 import com.p4ddy.paddycrm.domain.opportunity.OpportunityStage
@@ -18,12 +18,15 @@ import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.OpportunityTable.pr
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.OpportunityTable.quantity
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.OpportunityTable.stage
 import com.p4ddy.paddycrm.plugins.persistence.exposed.tables.UserTable
+import com.p4ddy.paddycrm.plugins.session.SingletonSessionManager
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class OpportunityExposedRepo : OpportunityRepo {
+	private val sessionManager: SessionManager = SingletonSessionManager()
+
 	override fun findAll(): List<Opportunity> {
 		val opptyList: MutableList<Opportunity> = mutableListOf()
 
@@ -106,11 +109,7 @@ class OpportunityExposedRepo : OpportunityRepo {
 	 * @throws Exception When no user is logged in
 	 */
 	private fun getCurrentUserId(): Int {
-		if (UserSingleton.user == null) {
-			throw Exception("No user logged in")
-		}
-
-		return UserSingleton.user!!.userId
+		return sessionManager.getCurrentUser().userId
 	}
 
 	/**
@@ -119,7 +118,7 @@ class OpportunityExposedRepo : OpportunityRepo {
 	 * @throws Exception When no user is logged in
 	 */
 	private fun getUserVisibilityQueryClause(): Op<Boolean> {
-		val user = UserSingleton.user ?: throw Exception("No user logged in")
+		val user = sessionManager.getCurrentUser()
 
 		val queryFilter = when (user.userType) {
 			UserTypes.ADMIN -> {

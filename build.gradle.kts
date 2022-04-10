@@ -20,6 +20,7 @@ val exposedVersion: String by project
 
 dependencies {
 	testImplementation(kotlin("test"))
+	testImplementation("io.mockk:mockk:1.12.3")
 	implementation(compose.desktop.currentOs)
 	implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
 	implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")

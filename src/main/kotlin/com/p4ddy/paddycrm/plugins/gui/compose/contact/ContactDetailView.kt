@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.p4ddy.paddycrm.adapters.contact.ContactBE
 import com.p4ddy.paddycrm.adapters.contact.ContactConverter
 import com.p4ddy.paddycrm.application.contact.ContactApplicationService
+import com.p4ddy.paddycrm.application.session.SessionManager
 import com.p4ddy.paddycrm.domain.contact.Contact
 import com.p4ddy.paddycrm.plugins.gui.compose.account.getTextfieldBackgroundColor
 import com.p4ddy.paddycrm.plugins.gui.compose.layout.*
@@ -23,6 +24,7 @@ import com.p4ddy.paddycrm.plugins.gui.compose.navigation.Screen
 import com.p4ddy.paddycrm.plugins.persistence.exposed.account.AccountExposedRepo
 import com.p4ddy.paddycrm.plugins.persistence.exposed.contact.ContactExposedRepo
 import com.p4ddy.paddycrm.plugins.persistence.exposed.user.UserExposedRepo
+import com.p4ddy.paddycrm.plugins.session.SingletonSessionManager
 import java.time.format.DateTimeFormatter
 
 @Composable
@@ -30,9 +32,11 @@ fun ContactDetailView(
 	navController: NavController,
 	startInEditMode: Boolean = false
 ) {
+	val sessionManager: SessionManager = SingletonSessionManager()
+
 	val contactRepo = ContactExposedRepo()
 	val contactService = ContactApplicationService(contactRepo)
-	val contactConverter = ContactConverter(UserExposedRepo(), AccountExposedRepo())
+	val contactConverter = ContactConverter(UserExposedRepo(), AccountExposedRepo(), sessionManager)
 
 	var thisContact: Contact? = null
 	var thisContactBE: ContactBE? = null

@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.p4ddy.paddycrm.adapters.opportunity.OpportunityBE
 import com.p4ddy.paddycrm.adapters.opportunity.OpportunityConverter
 import com.p4ddy.paddycrm.application.opportunity.OpportunityApplicationService
+import com.p4ddy.paddycrm.application.session.SessionManager
 import com.p4ddy.paddycrm.domain.opportunity.Opportunity
 import com.p4ddy.paddycrm.domain.opportunity.OpportunityRepo
 import com.p4ddy.paddycrm.domain.opportunity.OpportunityStage
@@ -28,6 +29,7 @@ import com.p4ddy.paddycrm.plugins.gui.compose.navigation.Screen
 import com.p4ddy.paddycrm.plugins.persistence.exposed.account.AccountExposedRepo
 import com.p4ddy.paddycrm.plugins.persistence.exposed.opportunity.OpportunityExposedRepo
 import com.p4ddy.paddycrm.plugins.persistence.exposed.user.UserExposedRepo
+import com.p4ddy.paddycrm.plugins.session.SingletonSessionManager
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -36,9 +38,11 @@ fun OpportunityDetailView(
 	navController: NavController,
 	startInEditMode: Boolean = false
 ) {
+	val sessionManager: SessionManager = SingletonSessionManager()
+
 	val opptyRepo: OpportunityRepo = OpportunityExposedRepo()
 	val opptyService = OpportunityApplicationService(opptyRepo)
-	val opptyConverter = OpportunityConverter(UserExposedRepo(), AccountExposedRepo())
+	val opptyConverter = OpportunityConverter(UserExposedRepo(), AccountExposedRepo(), sessionManager)
 
 	var thisOppty: Opportunity? = null
 	var thisOpptyBE: OpportunityBE? = null

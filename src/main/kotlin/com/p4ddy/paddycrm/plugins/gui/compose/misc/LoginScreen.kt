@@ -12,15 +12,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.p4ddy.paddycrm.application.session.SessionManager
 import com.p4ddy.paddycrm.application.user.UserApplicationService
-import com.p4ddy.paddycrm.application.user.UserSingleton
 import com.p4ddy.paddycrm.domain.user.User
 import com.p4ddy.paddycrm.plugins.persistence.exposed.user.UserExposedRepo
+import com.p4ddy.paddycrm.plugins.session.SingletonSessionManager
 
 @Composable
 fun LoginScreen() {
 	val userRepo = UserExposedRepo()
-	val userService = UserApplicationService(userRepo)
+	val sessionManager: SessionManager = SingletonSessionManager()
+	val userService = UserApplicationService(userRepo, sessionManager)
 
 	var email = remember { mutableStateOf(TextFieldValue("")) }
 	var password = remember { mutableStateOf(TextFieldValue("")) }
@@ -71,7 +73,7 @@ fun LoginScreen() {
 			}
 
 			if (passwordIsValid) {
-				UserSingleton.user = user
+				sessionManager.setCurrentUser(user)
 				triggerLogin.value = true
 			}
 		}) {

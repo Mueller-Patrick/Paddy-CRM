@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import com.p4ddy.paddycrm.adapters.user.UserBE
 import com.p4ddy.paddycrm.adapters.user.UserConverter
+import com.p4ddy.paddycrm.application.session.SessionManager
 import com.p4ddy.paddycrm.application.user.UserApplicationService
 import com.p4ddy.paddycrm.domain.user.User
 import com.p4ddy.paddycrm.domain.user.UserTypes
@@ -22,6 +23,7 @@ import com.p4ddy.paddycrm.plugins.gui.compose.misc.DialogDemo
 import com.p4ddy.paddycrm.plugins.gui.compose.navigation.NavController
 import com.p4ddy.paddycrm.plugins.gui.compose.navigation.Screen
 import com.p4ddy.paddycrm.plugins.persistence.exposed.user.UserExposedRepo
+import com.p4ddy.paddycrm.plugins.session.SingletonSessionManager
 import java.time.format.DateTimeFormatter
 
 @Composable
@@ -29,9 +31,11 @@ fun UserDetailView(
 	navController: NavController,
 	startInEditMode: Boolean = false
 ) {
+	val sessionManager: SessionManager = SingletonSessionManager()
+
 	val userRepo = UserExposedRepo()
-	val userService = UserApplicationService(userRepo)
-	val userConverter = UserConverter(userRepo)
+	val userService = UserApplicationService(userRepo, sessionManager)
+	val userConverter = UserConverter(userRepo, sessionManager)
 
 	var thisUser: User? = null
 	var thisUserBE: UserBE? = null
