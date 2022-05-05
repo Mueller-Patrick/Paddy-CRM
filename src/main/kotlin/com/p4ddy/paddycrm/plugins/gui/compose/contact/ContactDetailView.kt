@@ -18,6 +18,7 @@ import com.p4ddy.paddycrm.application.session.SessionManager
 import com.p4ddy.paddycrm.domain.contact.Contact
 import com.p4ddy.paddycrm.plugins.gui.compose.account.getTextfieldBackgroundColor
 import com.p4ddy.paddycrm.plugins.gui.compose.layout.*
+import com.p4ddy.paddycrm.plugins.gui.compose.misc.DialogDemo
 import com.p4ddy.paddycrm.plugins.gui.compose.navigation.NavController
 import com.p4ddy.paddycrm.plugins.gui.compose.navigation.Screen
 import com.p4ddy.paddycrm.plugins.persistence.exposed.account.AccountExposedRepo
@@ -69,13 +70,13 @@ fun ContactDetailView(
 	val addressStreetAndNumber = remember { mutableStateOf(TextFieldValue(thisContactBE.addressStreetAndNumber)) }
 
 	val isEditMode = remember { mutableStateOf(startInEditMode) }
+	val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
+	val errorMessage = remember { mutableStateOf("") }
 
 	Column {
 		ControlButtonSection {
 			Button(onClick = {
 				if (isEditMode.value) {
-					isEditMode.value = false
-
 					thisContactBE.accountId = accountId.value.text.toInt()
 					thisContactBE.salutation = salutation.value.text
 					thisContactBE.lastName = lastName.value.text
@@ -85,14 +86,34 @@ fun ContactDetailView(
 					thisContactBE.addressZip = addressZip.value.text
 					thisContactBE.addressStreetAndNumber = addressStreetAndNumber.value.text
 
-					val contact = contactConverter.convertBEToContact(thisContactBE)
+					val contact = try {
+						contactConverter.convertBEToContact(thisContactBE)
+					} catch (e: Exception) {
+						errorMessage.value = e.localizedMessage
+						setShowDialog(true)
+						return@Button
+					}
 
 					if (navController.navigateParam != -1) {
-						contactService.updateContact(contact)
+						try {
+							contactService.updateContact(contact)
+						} catch (e: Exception) {
+							errorMessage.value = e.localizedMessage
+							setShowDialog(true)
+							return@Button
+						}
 					} else {
-						val createdContact = contactService.createContact(contact)
-						navController.navigate(Screen.ContactDetailView.name, createdContact.contactId)
+						try {
+							val createdContact = contactService.createContact(contact)
+							navController.navigate(Screen.ContactDetailView.name, createdContact.contactId)
+						} catch (e: Exception) {
+							errorMessage.value = e.localizedMessage
+							setShowDialog(true)
+							return@Button
+						}
 					}
+
+					isEditMode.value = false
 				} else {
 					isEditMode.value = true
 				}
@@ -108,8 +129,14 @@ fun ContactDetailView(
 				Spacer(modifier = Modifier.width(10.dp))
 
 				Button(onClick = {
-					contactService.deleteContact(thisContact!!)
-					navController.navigate(Screen.ContactListView.name)
+					try {
+						contactService.deleteContact(thisContact!!)
+						navController.navigate(Screen.ContactListView.name)
+					} catch (e: Exception) {
+						errorMessage.value = e.localizedMessage
+						setShowDialog(true)
+						return@Button
+					}
 				}) {
 					Text("Delete")
 				}
@@ -267,5 +294,6 @@ fun ContactDetailView(
 				)
 			}
 		}
+		DialogDemo(showDialog, errorMessage.value, setShowDialog)
 	}
 }

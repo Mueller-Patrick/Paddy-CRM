@@ -21,6 +21,7 @@ import com.p4ddy.paddycrm.application.session.SessionManager
 import com.p4ddy.paddycrm.domain.account.Account
 import com.p4ddy.paddycrm.domain.account.AccountRepo
 import com.p4ddy.paddycrm.plugins.gui.compose.layout.*
+import com.p4ddy.paddycrm.plugins.gui.compose.misc.DialogDemo
 import com.p4ddy.paddycrm.plugins.gui.compose.navigation.NavController
 import com.p4ddy.paddycrm.plugins.gui.compose.navigation.Screen
 import com.p4ddy.paddycrm.plugins.persistence.exposed.account.AccountExposedRepo
@@ -74,13 +75,13 @@ fun AccountDetailView(
 		remember { mutableStateOf(TextFieldValue(thisAccountBE.shippingStreetAndNumber)) }
 
 	val isEditMode = remember { mutableStateOf(startInEditMode) }
+	val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
+	val errorMessage = remember { mutableStateOf("") }
 
 	Column {
 		ControlButtonSection {
 			Button(onClick = {
 				if (isEditMode.value) {
-					isEditMode.value = false
-
 					thisAccountBE.name = accountName.value.text
 					thisAccountBE.billingCountry = accountBillingCountry.value.text
 					thisAccountBE.billingCity = accountBillingCity.value.text
@@ -91,14 +92,34 @@ fun AccountDetailView(
 					thisAccountBE.shippingZip = accountShippingZip.value.text
 					thisAccountBE.shippingStreetAndNumber = accountShippingStreetAndNumber.value.text
 
-					val account = accountConverter.convertBEToAccount(thisAccountBE)
+					val account = try {
+						accountConverter.convertBEToAccount(thisAccountBE)
+					} catch (e: Exception) {
+						errorMessage.value = e.localizedMessage
+						setShowDialog(true)
+						return@Button
+					}
 
 					if (navController.navigateParam != -1) {
-						accountService.updateAccount(account)
+						try {
+							accountService.updateAccount(account)
+						} catch (e: Exception) {
+							errorMessage.value = e.localizedMessage
+							setShowDialog(true)
+							return@Button
+						}
 					} else {
-						val createdAccount = accountService.createAccount(account)
-						navController.navigate(Screen.AccountDetailView.name, createdAccount.accountId)
+						try {
+							val createdAccount = accountService.createAccount(account)
+							navController.navigate(Screen.AccountDetailView.name, createdAccount.accountId)
+						} catch (e: Exception) {
+							errorMessage.value = e.localizedMessage
+							setShowDialog(true)
+							return@Button
+						}
 					}
+
+					isEditMode.value = false
 				} else {
 					isEditMode.value = true
 				}
@@ -114,8 +135,14 @@ fun AccountDetailView(
 				Spacer(modifier = Modifier.width(10.dp))
 
 				Button(onClick = {
-					accountService.deleteAccount(thisAccount!!)
-					navController.navigate(Screen.AccountListView.name)
+					try {
+						accountService.deleteAccount(thisAccount!!)
+						navController.navigate(Screen.AccountListView.name)
+					} catch (e: Exception) {
+						errorMessage.value = e.localizedMessage
+						setShowDialog(true)
+						return@Button
+					}
 				}) {
 					Text("Delete")
 				}
@@ -274,6 +301,7 @@ fun AccountDetailView(
 				)
 			}
 		}
+		DialogDemo(showDialog, errorMessage.value, setShowDialog)
 	}
 }
 
